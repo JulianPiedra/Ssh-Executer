@@ -6,7 +6,7 @@ using Renci.SshNet;
 using Microsoft.VisualBasic.ApplicationServices;
 using System;
 
-namespace TareaCorta1
+namespace SshExecuter
 {
     public partial class FrmServidores : Form
     {

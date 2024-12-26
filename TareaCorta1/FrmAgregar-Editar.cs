@@ -1,7 +1,7 @@
 ﻿using ClaseDatos;
 using System.Data;
 
-namespace TareaCorta1
+namespace SshExecuter
 {
     public partial class FrmAgregar_Editar : Form
     {

@@ -1,4 +1,4 @@
-﻿namespace TareaCorta1
+﻿namespace SshExecuter
 {
     partial class FrmAgregar_Editar
     {

@@ -1,4 +1,4 @@
-namespace TareaCorta1;
+namespace SshExecuter;
 
 static class Program
 {
