@@ -12,17 +12,5 @@
 
             string connectionString = $"Server={servidor};Database={baseDatos};Uid={usuario};Pwd={contraseña};";
             return connectionString;
-        }
-
-        public string ObtenerConexionSqlLuis()
-        {
-            string servidor = "LAPTOP-44H1EHER";
-            //string servidor = "BLASPHENOR";
-            string baseDatos = "ComandosBD";
-            string usuario = "Luis";
-            string contraseña = "Luis";
-            string connectionString = $"Server={servidor};Database={baseDatos};Uid={usuario};Pwd={contraseña};";
-            return connectionString;
-        }
-
+        } 
     }}
