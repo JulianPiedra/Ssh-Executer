@@ -1,6 +1,6 @@
 # Ssh-Executer
 
-This program let's you execute command in a different linux machine through ssh, based on the ip of the machine, database to save comands, and server info can be restored with the script/bak in the DataBaseRestore 
-After restoring the database change the database credentials in the SshExecuter.dll.config file in the extracted zipped directory
+This program lets you execute commands on a different Linux machine through SSH, based on the machine's IP. It includes a database to save commands, and server information can be restored with the script/backup in the `DataBaseRestore` folder.  
+After restoring the database, change the database credentials in the `SshExecuter.dll.config` file in the extracted zipped directory.
 
-[Download the Ssh executer](https://github.com/JulianPiedra/Ssh-Executer/tree/main/Files/SshExecuter.zip)
+[Download the Ssh-Executer](https://raw.githubusercontent.com/JulianPiedra/Ssh-Executer/main/Files/SshExecuter.zip)
