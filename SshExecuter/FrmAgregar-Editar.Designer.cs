@@ -40,14 +40,14 @@
             lblUsuario = new Label();
             txtContraseña = new TextBox();
             lblContraseña = new Label();
+            textBox1 = new TextBox();
             SuspendLayout();
             // 
             // btnAceptar
             // 
-            btnAceptar.Location = new Point(12, 361);
-            btnAceptar.Margin = new Padding(3, 4, 3, 4);
+            btnAceptar.Location = new Point(208, 230);
             btnAceptar.Name = "btnAceptar";
-            btnAceptar.Size = new Size(86, 31);
+            btnAceptar.Size = new Size(75, 23);
             btnAceptar.TabIndex = 0;
             btnAceptar.Text = "Aceptar";
             btnAceptar.UseVisualStyleBackColor = true;
@@ -55,10 +55,9 @@
             // 
             // btnCancelar
             // 
-            btnCancelar.Location = new Point(232, 361);
-            btnCancelar.Margin = new Padding(3, 4, 3, 4);
+            btnCancelar.Location = new Point(10, 230);
             btnCancelar.Name = "btnCancelar";
-            btnCancelar.Size = new Size(86, 31);
+            btnCancelar.Size = new Size(75, 23);
             btnCancelar.TabIndex = 1;
             btnCancelar.Text = "Cancelar";
             btnCancelar.UseVisualStyleBackColor = true;
@@ -69,9 +68,9 @@
             lblComando.AutoSize = true;
             lblComando.Enabled = false;
             lblComando.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            lblComando.Location = new Point(101, 41);
+            lblComando.Location = new Point(97, 13);
             lblComando.Name = "lblComando";
-            lblComando.Size = new Size(191, 28);
+            lblComando.Size = new Size(153, 21);
             lblComando.TabIndex = 2;
             lblComando.Text = "Ingrese su comando:";
             lblComando.Visible = false;
@@ -79,10 +78,9 @@
             // txtComando
             // 
             txtComando.Enabled = false;
-            txtComando.Location = new Point(12, 81);
-            txtComando.Margin = new Padding(3, 4, 3, 4);
+            txtComando.Location = new Point(10, 55);
             txtComando.Name = "txtComando";
-            txtComando.Size = new Size(354, 27);
+            txtComando.Size = new Size(310, 23);
             txtComando.TabIndex = 3;
             txtComando.Visible = false;
             // 
@@ -91,9 +89,9 @@
             lblNomServer.AutoSize = true;
             lblNomServer.Enabled = false;
             lblNomServer.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            lblNomServer.Location = new Point(14, 12);
+            lblNomServer.Location = new Point(10, 9);
             lblNomServer.Name = "lblNomServer";
-            lblNomServer.Size = new Size(301, 28);
+            lblNomServer.Size = new Size(240, 21);
             lblNomServer.TabIndex = 4;
             lblNomServer.Text = "Nombre para identificar servidor:";
             lblNomServer.Visible = false;
@@ -101,20 +99,18 @@
             // txtNombre
             // 
             txtNombre.Enabled = false;
-            txtNombre.Location = new Point(12, 73);
-            txtNombre.Margin = new Padding(3, 4, 3, 4);
+            txtNombre.Location = new Point(10, 33);
             txtNombre.Name = "txtNombre";
-            txtNombre.Size = new Size(306, 27);
+            txtNombre.Size = new Size(268, 23);
             txtNombre.TabIndex = 5;
             txtNombre.Visible = false;
             // 
             // txtIP
             // 
             txtIP.Enabled = false;
-            txtIP.Location = new Point(12, 150);
-            txtIP.Margin = new Padding(3, 4, 3, 4);
+            txtIP.Location = new Point(10, 84);
             txtIP.Name = "txtIP";
-            txtIP.Size = new Size(306, 27);
+            txtIP.Size = new Size(268, 23);
             txtIP.TabIndex = 7;
             txtIP.Visible = false;
             // 
@@ -123,9 +119,9 @@
             lblIP.AutoSize = true;
             lblIP.Enabled = false;
             lblIP.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            lblIP.Location = new Point(12, 107);
+            lblIP.Location = new Point(10, 60);
             lblIP.Name = "lblIP";
-            lblIP.Size = new Size(119, 28);
+            lblIP.Size = new Size(95, 21);
             lblIP.TabIndex = 6;
             lblIP.Text = "Dirección IP:";
             lblIP.Visible = false;
@@ -133,10 +129,9 @@
             // txtUsuario
             // 
             txtUsuario.Enabled = false;
-            txtUsuario.Location = new Point(12, 227);
-            txtUsuario.Margin = new Padding(3, 4, 3, 4);
+            txtUsuario.Location = new Point(10, 134);
             txtUsuario.Name = "txtUsuario";
-            txtUsuario.Size = new Size(306, 27);
+            txtUsuario.Size = new Size(268, 23);
             txtUsuario.TabIndex = 9;
             txtUsuario.Visible = false;
             // 
@@ -145,9 +140,9 @@
             lblUsuario.AutoSize = true;
             lblUsuario.Enabled = false;
             lblUsuario.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            lblUsuario.Location = new Point(12, 185);
+            lblUsuario.Location = new Point(10, 110);
             lblUsuario.Name = "lblUsuario";
-            lblUsuario.Size = new Size(83, 28);
+            lblUsuario.Size = new Size(67, 21);
             lblUsuario.TabIndex = 8;
             lblUsuario.Text = "Usuario:";
             lblUsuario.Visible = false;
@@ -155,11 +150,10 @@
             // txtContraseña
             // 
             txtContraseña.Enabled = false;
-            txtContraseña.Location = new Point(12, 305);
-            txtContraseña.Margin = new Padding(3, 4, 3, 4);
+            txtContraseña.Location = new Point(10, 184);
             txtContraseña.Name = "txtContraseña";
             txtContraseña.PasswordChar = '*';
-            txtContraseña.Size = new Size(306, 27);
+            txtContraseña.Size = new Size(268, 23);
             txtContraseña.TabIndex = 11;
             txtContraseña.Visible = false;
             // 
@@ -168,18 +162,27 @@
             lblContraseña.AutoSize = true;
             lblContraseña.Enabled = false;
             lblContraseña.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            lblContraseña.Location = new Point(12, 262);
+            lblContraseña.Location = new Point(10, 160);
             lblContraseña.Name = "lblContraseña";
-            lblContraseña.Size = new Size(225, 28);
+            lblContraseña.Size = new Size(179, 21);
             lblContraseña.TabIndex = 10;
             lblContraseña.Text = "Contraseña de conexión:";
             lblContraseña.Visible = false;
             // 
+            // textBox1
+            // 
+            textBox1.Enabled = false;
+            textBox1.Location = new Point(10, 46);
+            textBox1.Name = "textBox1";
+            textBox1.Size = new Size(310, 23);
+            textBox1.TabIndex = 3;
+            textBox1.Visible = false;
+            // 
             // FrmAgregar_Editar
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(337, 419);
+            ClientSize = new Size(295, 265);
             Controls.Add(txtContraseña);
             Controls.Add(lblContraseña);
             Controls.Add(txtUsuario);
@@ -188,14 +191,15 @@
             Controls.Add(lblIP);
             Controls.Add(txtNombre);
             Controls.Add(lblNomServer);
+            Controls.Add(textBox1);
             Controls.Add(txtComando);
             Controls.Add(lblComando);
             Controls.Add(btnCancelar);
             Controls.Add(btnAceptar);
-            Margin = new Padding(3, 4, 3, 4);
+            FormBorderStyle = FormBorderStyle.FixedDialog;
+            MaximizeBox = false;
             Name = "FrmAgregar_Editar";
             StartPosition = FormStartPosition.CenterScreen;
-            Load += FrmAgregar_Editar_Load;
             Shown += FrmAgregar_Editar_Shown;
             ResumeLayout(false);
             PerformLayout();
@@ -215,5 +219,6 @@
         private TextBox txtContraseña;
         private Label lblContraseña;
         public TextBox txtNombre;
+        private TextBox textBox1;
     }
 }

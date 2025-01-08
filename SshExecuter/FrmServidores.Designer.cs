@@ -44,6 +44,12 @@ partial class FrmServidores
         lbComandos = new ListBox();
         txtResultado = new TextBox();
         lblResultados = new Label();
+        contextMenuStrip1 = new ContextMenuStrip(components);
+        configurationToolStripMenuItem = new ToolStripMenuItem();
+        menuStrip1 = new MenuStrip();
+        Menu = new ToolStripMenuItem();
+        contextMenuStrip1.SuspendLayout();
+        menuStrip1.SuspendLayout();
         SuspendLayout();
         // 
         // lblServidores
@@ -223,11 +229,40 @@ partial class FrmServidores
         lblResultados.TextAlign = ContentAlignment.MiddleLeft;
         lblResultados.TextChanged += lblResultados_TextChanged;
         // 
+        // contextMenuStrip1
+        // 
+        contextMenuStrip1.Items.AddRange(new ToolStripItem[] { configurationToolStripMenuItem });
+        contextMenuStrip1.Name = "contextMenuStrip1";
+        contextMenuStrip1.Size = new Size(149, 26);
+        // 
+        // configurationToolStripMenuItem
+        // 
+        configurationToolStripMenuItem.Name = "configurationToolStripMenuItem";
+        configurationToolStripMenuItem.Size = new Size(148, 22);
+        configurationToolStripMenuItem.Text = "Configuration";
+        // 
+        // menuStrip1
+        // 
+        menuStrip1.Items.AddRange(new ToolStripItem[] { Menu });
+        menuStrip1.Location = new Point(0, 0);
+        menuStrip1.Name = "menuStrip1";
+        menuStrip1.Size = new Size(699, 24);
+        menuStrip1.TabIndex = 14;
+        menuStrip1.Text = "menuStrip1";
+        // 
+        // Menu
+        // 
+        Menu.Name = "Menu";
+        Menu.Size = new Size(126, 20);
+        Menu.Text = "Server configuration";
+        Menu.Click += serverConfigurationToolStripMenuItem_Click;
+        // 
         // FrmServidores
         // 
         AutoScaleDimensions = new SizeF(7F, 15F);
         AutoScaleMode = AutoScaleMode.Font;
         ClientSize = new Size(699, 526);
+        Controls.Add(menuStrip1);
         Controls.Add(lblResultados);
         Controls.Add(txtResultado);
         Controls.Add(lbComandos);
@@ -242,10 +277,15 @@ partial class FrmServidores
         Controls.Add(btnEditar);
         Controls.Add(btnAgregar);
         Controls.Add(lblServidores);
+        FormBorderStyle = FormBorderStyle.FixedDialog;
+        MainMenuStrip = menuStrip1;
         Name = "FrmServidores";
         StartPosition = FormStartPosition.CenterScreen;
         Text = "Servidores";
-        Load += FrmServidores_Load;
+        Shown += FrmServidores_Load;
+        contextMenuStrip1.ResumeLayout(false);
+        menuStrip1.ResumeLayout(false);
+        menuStrip1.PerformLayout();
         ResumeLayout(false);
         PerformLayout();
     }
@@ -267,4 +307,8 @@ partial class FrmServidores
     private ListBox lbComandos;
     private TextBox txtResultado;
     public Label lblResultados;
+    private ContextMenuStrip contextMenuStrip1;
+    private ToolStripMenuItem configurationToolStripMenuItem;
+    private MenuStrip menuStrip1;
+    private ToolStripMenuItem Menu;
 }

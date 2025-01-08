@@ -6,8 +6,8 @@ namespace SshExecuter
     public partial class FrmAgregar_Editar : Form
     {
         private bool Editar = false;
-        private string NomOriginal; 
-        
+        private string NomOriginal;
+
         public FrmAgregar_Editar()
         {
             InitializeComponent();
@@ -68,14 +68,14 @@ namespace SshExecuter
                     if (this.Text == "Manejo Servidor")
                     {
                         archivos.ModificarServidor(NomOriginal, txtNombre.Text, txtIP.Text, txtUsuario.Text, txtContraseña.Text);
-                        servidores.lblResultados.Text=("Se ha modificado la información del servidor");
+                        servidores.lblResultados.Text = ("Se ha modificado la información del servidor");
                     }
                     else if (this.Text == "Manejo Comandos")
                     {
                         archivos.ModificarComando(NomOriginal, txtComando.Text);
                         servidores.lblResultados.Text = ("Se ha modificado la información del comando");
                     }
-                        Editar = false;
+                    Editar = false;
                 }
                 else
                 {
@@ -124,9 +124,8 @@ namespace SshExecuter
             }
             Editar = true;
         }
-        private void FrmAgregar_Editar_Load(object sender, EventArgs e)
-        {
 
-        }
+
+
     }
 }

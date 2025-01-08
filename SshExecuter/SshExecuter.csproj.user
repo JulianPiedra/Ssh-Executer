@@ -7,6 +7,9 @@
     <Compile Update="FrmAgregar-Editar.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="FrmConfiguracion.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="FrmServidores.cs">
       <SubType>Form</SubType>
     </Compile>

@@ -8,11 +8,14 @@ namespace ClaseDatos
     public class ManejoArchivos
     {
         private static Conexion conn = new Conexion();
-        private static string cadenaConexion = conn.ObtenerConexionSQL();
-        //private static string cadenaConexion = conn.ObtenerConexionSQL();
+        private static string cadenaConexion { get; set; }
 
         public static DataTable Servers { get; set; } = new DataTable();
         public static DataTable Comandos { get; set; } = new DataTable();
+        public ManejoArchivos()
+        {
+            cadenaConexion = conn.ObtenerConexionSQL();
+        }
         public void CargarDatos()
         {
 
@@ -71,6 +74,7 @@ namespace ClaseDatos
             {
                 throw new ArgumentException("La dirección IP no es válida.");
             }
+
 
             string query = @"
             INSERT INTO Servers (NombreServer, IP, UserID, Pass) 
