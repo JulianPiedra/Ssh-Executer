@@ -17,11 +17,7 @@ namespace SshExecuter
 
         public FrmServidores()
         {
-            FrmConfiguracion configuracion = new FrmConfiguracion();
-
             InitializeComponent();
-            configuracion.ConfigurationAccepted += Configuracion_ConfigurationAccepted;
-
         }
         private void Configuracion_ConfigurationAccepted(object sender, EventArgs e)
         {
@@ -247,7 +243,7 @@ namespace SshExecuter
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Ocurrió un error: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"Ocurrió un error con la conexión a la base de datos", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 lbServidores.DataSource = null;
                 lbServidores.Items.Clear();
             }

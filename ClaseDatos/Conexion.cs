@@ -6,10 +6,10 @@ namespace ClaseDatos
     {
         public string ObtenerConexionSQL()
         {
-            string servidor = ConfigurationManager.AppSettings["server"];
-            string baseDatos = ConfigurationManager.AppSettings["database"];
-            string usuario = ConfigurationManager.AppSettings["user"];
-            string contraseña = ConfigurationManager.AppSettings["password"];
+            string servidor = Cifrado.Desencriptar(ConfigurationManager.AppSettings["server"]);
+            string baseDatos = Cifrado.Desencriptar(ConfigurationManager.AppSettings["database"]);
+            string usuario = Cifrado.Desencriptar(ConfigurationManager.AppSettings["user"]);
+            string contraseña = Cifrado.Desencriptar(ConfigurationManager.AppSettings["password"]);
             bool windowsAuth = bool.TryParse(ConfigurationManager.AppSettings["windowsauth"], out bool isWindowsAuth) && isWindowsAuth;
 
             string connectionString = windowsAuth

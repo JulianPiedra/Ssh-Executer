@@ -12,6 +12,7 @@ namespace ClaseDatos
 
         public static string Encriptar(string textoPlano)
         {
+            if (string.IsNullOrEmpty(textoPlano)) return textoPlano;
             using (var aesAlg = Aes.Create())
             {
                 aesAlg.Key = Clave;
@@ -35,6 +36,8 @@ namespace ClaseDatos
 
         public static  string Desencriptar(string textoEncriptado)
         {
+            if (string.IsNullOrEmpty(textoEncriptado)) return textoEncriptado;
+
             using (var aesAlg = Aes.Create())
             {
                 aesAlg.Key = Clave;
