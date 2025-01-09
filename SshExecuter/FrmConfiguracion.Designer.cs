@@ -46,7 +46,6 @@
             txtServerName.Name = "txtServerName";
             txtServerName.Size = new Size(268, 23);
             txtServerName.TabIndex = 11;
-            txtServerName.TextChanged += txtUsuario_TextChanged;
             // 
             // lblServer
             // 
@@ -147,7 +146,7 @@
             Controls.Add(lblServer);
             Name = "FrmConfiguracion";
             StartPosition = FormStartPosition.CenterScreen;
-            Text = "FrmConfiguracion";
+            Text = "Configuration";
             Load += FrmConfiguracion_Load;
             ResumeLayout(false);
             PerformLayout();

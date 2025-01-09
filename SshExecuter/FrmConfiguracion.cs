@@ -1,49 +1,43 @@
 ﻿using ClaseDatos;
+using Models;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Configuration;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace SshExecuter
 {
     public partial class FrmConfiguracion : Form
     {
+        // Event triggered when the configuration is accepted
         public event EventHandler ConfigurationAccepted;
+
         public FrmConfiguracion()
         {
             InitializeComponent();
         }
 
-        private void txtUsuario_TextChanged(object sender, EventArgs e)
-        {
-
-        }
 
         private void FrmConfiguracion_Load(object sender, EventArgs e)
         {
+            Database database = new Database();
             try
             {
-                txtServerName.Text = Cifrado.Desencriptar(ConfigurationManager.AppSettings["server"]);
-                txtDatabase.Text = Cifrado.Desencriptar(ConfigurationManager.AppSettings["database"]);
-                txtUsername.Text = Cifrado.Desencriptar(ConfigurationManager.AppSettings["user"]);
-                txtPassword.Text = Cifrado.Desencriptar(ConfigurationManager.AppSettings["password"]);
-                cbWindowsAuthentication.Checked = bool.TryParse(ConfigurationManager.AppSettings["windowsauth"], out bool isWindowsAuth) && isWindowsAuth;
+                // Decrypt and load the saved configuration into the form fields
+                txtServerName.Text = Cifrado.Desencriptar(database.Servidor);
+                txtDatabase.Text = Cifrado.Desencriptar(database.BaseDatos);
+                txtUsername.Text = Cifrado.Desencriptar(database.Usuario);
+                txtPassword.Text = Cifrado.Desencriptar(database.Contraseña);
+                cbWindowsAuthentication.Checked = database.WindowsAuth;
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Ocurrió un error: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-
+                MessageBox.Show($"An error occurred: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
         private void cbWindowsAuthentication_CheckedChanged(object sender, EventArgs e)
         {
+            // Enable or disable the username and password fields based on the Windows Authentication checkbox
             txtPassword.Enabled = !cbWindowsAuthentication.Checked;
             txtUsername.Enabled = !cbWindowsAuthentication.Checked;
             lblPassword.Enabled = !cbWindowsAuthentication.Checked;
@@ -54,50 +48,32 @@ namespace SshExecuter
         {
             try
             {
-                // Validar entrada
-                if (string.IsNullOrWhiteSpace(txtServerName.Text) ||
-                    string.IsNullOrWhiteSpace(txtDatabase.Text) ||
-                    (string.IsNullOrWhiteSpace(txtUsername.Text) ||
-                    string.IsNullOrWhiteSpace(txtPassword.Text)) &&
-                    !cbWindowsAuthentication.Checked)
-                {
-                    MessageBox.Show("Por favor, complete todos los campos.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
-                }
-
-                // Guardar configuraciones
-                SaveConfiguration(
-                    txtServerName.Text,
+                DatabaseConfig config = new DatabaseConfig();
+                var database = new Database(
+                     txtServerName.Text,
                     txtDatabase.Text,
                     txtUsername.Text,
                     txtPassword.Text,
                     cbWindowsAuthentication.Checked
                 );
+                database.Validate();    
+                // Save the configuration
+                config.SaveConfiguration(database);
 
-                MessageBox.Show("Configuración guardada exitosamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Configuration saved successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                // Disparar evento y cerrar formulario
+                // Trigger the event and close the form
                 ConfigurationAccepted?.Invoke(this, EventArgs.Empty);
                 this.Dispose();
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Ocurrió un error: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"An error occurred: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
-        private void SaveConfiguration(string server, string database, string user, string password, bool windowsAuth)
-        {
-            var config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+        
 
-            config.AppSettings.Settings["server"].Value = Cifrado.Encriptar(server);
-            config.AppSettings.Settings["database"].Value = Cifrado.Encriptar(database);
-            config.AppSettings.Settings["user"].Value = Cifrado.Encriptar(user);
-            config.AppSettings.Settings["password"].Value = Cifrado.Encriptar(password);
-            config.AppSettings.Settings["windowsauth"].Value = windowsAuth.ToString();
 
-            config.Save(ConfigurationSaveMode.Modified);
-            ConfigurationManager.RefreshSection("appSettings");
-        }
     }
 }

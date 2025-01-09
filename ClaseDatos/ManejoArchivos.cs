@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Models;
+using System;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
@@ -64,18 +65,9 @@ namespace ClaseDatos
                 throw ex;
             }
         }
-        public void CrearServidor(string NomServer, string IP, string Usuario, string Contraseña)
+        public void CrearServidor(Server server)
         {
-            if (string.IsNullOrEmpty(NomServer) || string.IsNullOrEmpty(IP)
-                || string.IsNullOrEmpty(Usuario) || string.IsNullOrEmpty(Contraseña))
-                throw new ArgumentException("Uno o más argumentos son nulos o vacíos.");
-
-            if (!IP.Split('.').All(x => byte.TryParse(x, out _)))
-            {
-                throw new ArgumentException("La dirección IP no es válida.");
-            }
-
-
+            
             string query = @"
             INSERT INTO Servers (NombreServer, IP, UserID, Pass) 
             VALUES (@NomServer, @IP, @Usuario, @Pass);
@@ -89,10 +81,10 @@ namespace ClaseDatos
 
                     using (SqlCommand command = new SqlCommand(query, connection))
                     {
-                        command.Parameters.AddWithValue("@NomServer", NomServer);
-                        command.Parameters.AddWithValue("@IP", IP);
-                        command.Parameters.AddWithValue("@Usuario", Usuario);
-                        command.Parameters.AddWithValue("@Pass", Cifrado.Encriptar(Contraseña));
+                        command.Parameters.AddWithValue("@NomServer", server.NomServer);
+                        command.Parameters.AddWithValue("@IP", server.IP);
+                        command.Parameters.AddWithValue("@Usuario", server.Usuario);
+                        command.Parameters.AddWithValue("@Pass", Cifrado.Encriptar(server.Contraseña));
 
                         command.ExecuteNonQuery();
                     }
@@ -106,12 +98,9 @@ namespace ClaseDatos
         }
 
 
-        public void CrearComando(string Comando, string Servidor)
+        public void CrearComando(Command commands)
         {
-            if (string.IsNullOrEmpty(Comando))
-            {
-                throw new ArgumentNullException(nameof(Comando), "El comando no puede ser nulo o vacío.");
-            }
+            
 
             string query = @"
               INSERT INTO Comandos (Comando, NombreServer) 
@@ -126,8 +115,8 @@ namespace ClaseDatos
 
                     using (SqlCommand command = new SqlCommand(query, connection))
                     {
-                        command.Parameters.AddWithValue("@Comando", Comando);
-                        command.Parameters.AddWithValue("@Servidor", Servidor);
+                        command.Parameters.AddWithValue("@Comando", commands.Comando);
+                        command.Parameters.AddWithValue("@Servidor", commands.Server);
 
                         command.ExecuteNonQuery();
                     }
@@ -140,7 +129,7 @@ namespace ClaseDatos
             }
         }
 
-        public void EliminarServidor(string NomServer)
+        public void EliminarServidor(Server server)
         {
             string query = @"
             DELETE FROM Comandos 
@@ -160,7 +149,7 @@ namespace ClaseDatos
 
                     using (SqlCommand command = new SqlCommand(query, connection))
                     {
-                        command.Parameters.AddWithValue("@NomServer", NomServer);
+                        command.Parameters.AddWithValue("@NomServer", server.NomServer);
                         command.ExecuteNonQuery();
 
                         command.CommandText = query2;
@@ -175,7 +164,7 @@ namespace ClaseDatos
             }
         }
 
-        public void EliminarComando(string Comando, string server)
+        public void EliminarComando(Command commands)
         {
             string query = @"
             DELETE FROM Comandos 
@@ -191,8 +180,8 @@ namespace ClaseDatos
 
                     using (SqlCommand command = new SqlCommand(query, connection))
                     {
-                        command.Parameters.AddWithValue("@Comando", Comando);
-                        command.Parameters.AddWithValue("@server", server);
+                        command.Parameters.AddWithValue("@Comando", commands.Comando);
+                        command.Parameters.AddWithValue("@server", commands.Server);
 
                         command.ExecuteNonQuery();
                     }
@@ -204,18 +193,8 @@ namespace ClaseDatos
                 throw ex;
             }
         }
-        public void ModificarServidor(string NomOriginal, string NomServer, string IP, string Usuario, string Contraseña)
+        public void ModificarServidor(Server server)
         {
-            if (string.IsNullOrEmpty(NomServer) || string.IsNullOrEmpty(IP)
-                               || string.IsNullOrEmpty(Usuario) || string.IsNullOrEmpty(Contraseña))
-            {
-                throw new ArgumentException("Uno o más argumentos son nulos o vacíos.");
-            }
-
-            if (!IP.Split('.').All(x => byte.TryParse(x, out _)))
-            {
-                throw new ArgumentException("La dirección IP no es válida.");
-            }
 
             string query = @"
             UPDATE Servers 
@@ -237,11 +216,11 @@ namespace ClaseDatos
 
                     using (SqlCommand command = new SqlCommand(query, connection))
                     {
-                        command.Parameters.AddWithValue("@NomServer", NomServer);
-                        command.Parameters.AddWithValue("@IP", IP);
-                        command.Parameters.AddWithValue("@Usuario", Usuario);
-                        command.Parameters.AddWithValue("@Pass", Cifrado.Encriptar(Contraseña));
-                        command.Parameters.AddWithValue("@NomOriginal", NomOriginal);
+                        command.Parameters.AddWithValue("@NomServer", server.NomServer);
+                        command.Parameters.AddWithValue("@IP", server.IP);
+                        command.Parameters.AddWithValue("@Usuario", server.Usuario);
+                        command.Parameters.AddWithValue("@Pass", Cifrado.Encriptar(server.Contraseña));
+                        command.Parameters.AddWithValue("@NomOriginal", server.NomOriginal);
 
                         command.ExecuteNonQuery();
 
@@ -257,13 +236,8 @@ namespace ClaseDatos
             }
         }
 
-        public void ModificarComando(string ComandoOriginal, string Comando)
+        public void ModificarComando(Command commands)
         {
-            if (string.IsNullOrEmpty(Comando))
-            {
-                throw new ArgumentNullException(nameof(Comando), "El comando no puede ser nulo o vacío.");
-            }
-
             string query = @"
             UPDATE Comandos 
             SET Comando = @Comando 
@@ -278,8 +252,8 @@ namespace ClaseDatos
 
                     using (SqlCommand command = new SqlCommand(query, connection))
                     {
-                        command.Parameters.AddWithValue("@Comando", Comando);
-                        command.Parameters.AddWithValue("@ComandoOriginal", ComandoOriginal);
+                        command.Parameters.AddWithValue("@Comando", commands.Comando);
+                        command.Parameters.AddWithValue("@ComandoOriginal", commands.NomOriginal);
 
                         command.ExecuteNonQuery();
                     }

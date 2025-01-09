@@ -6,6 +6,7 @@ using Renci.SshNet;
 using Microsoft.VisualBasic.ApplicationServices;
 using System;
 using Microsoft.VisualBasic;
+using Models;
 
 namespace SshExecuter
 {
@@ -14,7 +15,6 @@ namespace SshExecuter
         private SshClient client;
         Label messageLabel = new Label();
 
-
         public FrmServidores()
         {
             InitializeComponent();
@@ -22,22 +22,21 @@ namespace SshExecuter
         private void Configuracion_ConfigurationAccepted(object sender, EventArgs e)
         {
             CargarDatos();
-            lblResultados.Text = "Información de base de datos actualizada con éxito";
+            lblResultados.Text = "Database information successfully updated";
         }
 
         private void btnAgregar_Click(object sender, EventArgs e)
         {
             FrmAgregar_Editar servidor = new FrmAgregar_Editar();
-            servidor.Text = "Manejo Servidor";
+            servidor.Text = "Server Management";
             servidor.ShowDialog();
-
         }
 
         private void btnIniciar_Click(object sender, EventArgs e)
         {
             if (lbServidores.SelectedIndex == -1 || lbComandos.SelectedIndex == -1)
             {
-                MessageBox.Show("Por favor seleccione el servidor y el comando que desea ejecutar", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Please select a server and the command you want to execute", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
@@ -49,35 +48,35 @@ namespace SshExecuter
             string password = servidorSeleccionadoRow["Pass"].ToString();
             string comando = comandoSeleccionadoRow["Comando"].ToString();
 
-            txtResultado.Clear(); // Limpiar el TextBox antes de la ejecución
+            txtResultado.Clear(); // Clear the TextBox before execution
 
             var connectionInfo = new ConnectionInfo(ip, username,
                 new PasswordAuthenticationMethod(username, password))
             {
-                Timeout = TimeSpan.FromSeconds(5) // Establece el timeout de la conexión a 5 segundos
+                Timeout = TimeSpan.FromSeconds(5) // Set connection timeout to 5 seconds
             };
 
             client = new SshClient(connectionInfo);
 
             try
             {
-                UpdateTXT($"Conectando al servidor SSH... \r\n");
+                UpdateTXT("Connecting to the SSH server...\r\n");
                 client.Connect();
 
                 if (client.IsConnected)
                 {
-                    UpdateTXT($"Conexión establecida con el servidor SSH. \r\n");
+                    UpdateTXT("SSH server connection established.\r\n");
 
                     var cmd = client.CreateCommand(comando);
                     var asyncResult = cmd.BeginExecute();
 
-                    // Leer resultados de manera asíncrona mientras se ejecuta el comando
+                    // Read results asynchronously while the command executes
                     var result = cmd.EndExecute(asyncResult);
-                    UpdateTXT($"Resultado:\n{result}\n");
+                    UpdateTXT($"Result:\n{result}\n");
                 }
                 else
                 {
-                    UpdateTXT($"Error: No se pudo conectar al servidor SSH. \r\n");
+                    UpdateTXT("Error: Could not connect to the SSH server.\r\n");
                 }
             }
             catch (Exception ex)
@@ -110,21 +109,17 @@ namespace SshExecuter
             }
         }
 
-
-
-
         private void btnAgregarComm_Click(object sender, EventArgs e)
         {
             if (lbServidores.SelectedIndex == -1)
             {
-                MessageBox.Show("Por favor seleccione el servidor al cual agregar el comando ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Please select the server to which you want to add the command", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
-
             FrmAgregar_Editar servidor = new FrmAgregar_Editar();
             DataRowView selectedRow = lbServidores.SelectedItem as DataRowView;
-            servidor.Text = "Manejo Comandos";
+            servidor.Text = "Command Management";
             servidor.txtNombre.Text = selectedRow["NombreServer"].ToString();
             servidor.ShowDialog();
         }
@@ -133,17 +128,23 @@ namespace SshExecuter
         {
             if (lbServidores.SelectedIndex == -1)
             {
-                MessageBox.Show("Por favor seleccione un servidor ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Please select a server", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             else
             {
                 DataRowView selectedRow = lbServidores.SelectedItem as DataRowView;
 
                 FrmAgregar_Editar servidor = new FrmAgregar_Editar();
-                servidor.Text = "Manejo Servidor";
-                servidor.PrecargarDatos(selectedRow["NombreServer"].ToString(), selectedRow["IP"].ToString(), selectedRow["UserID"].ToString(), selectedRow["Pass"].ToString());
+                var server = new Server (
+                     selectedRow["NombreServer"].ToString(),
+                     selectedRow["IP"].ToString(),
+                     selectedRow["UserID"].ToString(),
+                     selectedRow["Pass"].ToString()
+                );
+                server.Validate();
+                servidor.Text = "Server Management";
+                servidor.PrecargarDatos(server, null);
                 servidor.ShowDialog();
-
             }
         }
 
@@ -151,47 +152,57 @@ namespace SshExecuter
         {
             if (lbServidores.SelectedIndex == -1)
             {
-                MessageBox.Show("Por favor seleccione un servidor ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Please select a server", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             else
             {
                 DataRowView selectedRow = lbServidores.SelectedItem as DataRowView;
 
-                messageLabel.Text = "¿Desea eliminar el servidor?";
+                messageLabel.Text = "Do you want to delete the server?";
 
-
-                if (MessageBox.Show("¿Está seguro de que desea eliminar este servidor?",
-                    "Confirmación",
+                if (MessageBox.Show("Are you sure you want to delete this server?",
+                    "Confirmation",
                     MessageBoxButtons.YesNo,
                     MessageBoxIcon.Warning) == DialogResult.Yes)
                 {
+                    var server = new Server(
+                     selectedRow["NombreServer"].ToString(),
+                     selectedRow["IP"].ToString(),
+                     selectedRow["UserID"].ToString(),
+                     selectedRow["Pass"].ToString()
+                );
                     ManejoArchivos manejoArchivos = new ManejoArchivos();
-                    manejoArchivos.EliminarServidor(selectedRow["NombreServer"].ToString());
+                    manejoArchivos.EliminarServidor(server);
                     CargarDatos();
-                    lblResultados.Text = "Servidor eliminado";
+                    lblResultados.Text = "Server deleted";
                 }
             }
         }
+
         private void btnEliminarComm_Click(object sender, EventArgs e)
         {
             if (lbComandos.SelectedIndex == -1)
             {
-                MessageBox.Show("Por favor seleccione un comando ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Please select a command", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             else
             {
                 DataRowView selectedRow = lbComandos.SelectedItem as DataRowView;
                 DataRowView selectedServer = lbServidores.SelectedItem as DataRowView;
 
-                if (MessageBox.Show("¿Está seguro de que desea eliminar este comando?",
-                    "Confirmación",
+                if (MessageBox.Show("Are you sure you want to delete this command?",
+                    "Confirmation",
                     MessageBoxButtons.YesNo,
                     MessageBoxIcon.Warning) == DialogResult.Yes)
                 {
                     ManejoArchivos manejoArchivos = new ManejoArchivos();
-                    manejoArchivos.EliminarComando(selectedRow["Comando"].ToString(), selectedServer["NombreServer"].ToString());
+                    var command = new Command(
+                        selectedServer["NombreServer"].ToString(),
+                     selectedRow["Comando"].ToString()
+                    );
+                    manejoArchivos.EliminarComando(command);
                     CargarDatos();
-                    lblResultados.Text = "Comando eliminado";
+                    lblResultados.Text = "Command deleted";
                 }
             }
         }
@@ -200,16 +211,21 @@ namespace SshExecuter
         {
             if (lbComandos.SelectedIndex == -1)
             {
-                MessageBox.Show("Por favor seleccione un comando ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Please select a command", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             else
             {
                 DataRowView selectedRow = lbComandos.SelectedItem as DataRowView;
                 FrmAgregar_Editar servidor = new FrmAgregar_Editar();
-                servidor.Text = "Manejo Comandos";
-                servidor.PrecargarDatos(selectedRow["Comando"].ToString(), null, null, null);
-                servidor.ShowDialog();
+                var command = new Command(
+                    selectedRow["Comando"].ToString(),
+                    selectedRow["NombreServer"].ToString(),
+                    selectedRow["Comando"].ToString()
+                    );
 
+                servidor.Text = "Command Management";
+                servidor.PrecargarDatos(null, command);
+                servidor.ShowDialog();
             }
         }
 
@@ -221,7 +237,7 @@ namespace SshExecuter
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Ocurrió un error: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"An error occurred: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -231,11 +247,11 @@ namespace SshExecuter
             {
                 ManejoArchivos manejoArchivos = new ManejoArchivos();
 
-                //Se cargan los datos de los servidores y comandos
+                // Load server and command data
                 manejoArchivos.CargarDatos();
                 var dtServer = ManejoArchivos.Servers;
 
-                //Se cargan los datos en los listbox
+                // Load data into list boxes
                 lbServidores.DataSource = null;
                 lbServidores.Items.Clear();
                 lbServidores.DataSource = dtServer;
@@ -243,7 +259,7 @@ namespace SshExecuter
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Ocurrió un error con la conexión a la base de datos", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"An error occurred with the database connection", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 lbServidores.DataSource = null;
                 lbServidores.Items.Clear();
             }
@@ -251,8 +267,6 @@ namespace SshExecuter
 
         private void lbServidores_SelectedIndexChanged(object sender, EventArgs e)
         {
-
-            //Se cargan los datos en los listbox
             lbComandos.DataSource = null;
             lbComandos.Items.Clear();
 
@@ -262,7 +276,7 @@ namespace SshExecuter
                 return;
             }
 
-            //busqueda linq para obtener los comandos del servidor seleccionado
+            // LINQ query to get commands for the selected server
             var query = from row in ManejoArchivos.Comandos.AsEnumerable()
                         where row.Field<string>("NombreServer") == selectedRow["NombreServer"].ToString()
                         select row;
@@ -274,7 +288,6 @@ namespace SshExecuter
 
             lbComandos.DataSource = dtComandos;
             lbComandos.DisplayMember = "Comando";
-
         }
 
         private async void lblResultados_TextChanged(object sender, EventArgs e)
@@ -286,9 +299,8 @@ namespace SshExecuter
         private void serverConfigurationToolStripMenuItem_Click(object sender, EventArgs e)
         {
             FrmConfiguracion configuracion = new FrmConfiguracion();
-            configuracion.ConfigurationAccepted += Configuracion_ConfigurationAccepted; // Suscribirse al evento
+            configuracion.ConfigurationAccepted += Configuracion_ConfigurationAccepted; // Subscribe to the event
             configuracion.ShowDialog();
         }
-
     }
 }

@@ -1,20 +1,17 @@
-﻿using System.Configuration;
+﻿using Models;
+using System.Configuration;
 
 namespace ClaseDatos
 {
     public class Conexion
     {
+        
         public string ObtenerConexionSQL()
         {
-            string servidor = Cifrado.Desencriptar(ConfigurationManager.AppSettings["server"]);
-            string baseDatos = Cifrado.Desencriptar(ConfigurationManager.AppSettings["database"]);
-            string usuario = Cifrado.Desencriptar(ConfigurationManager.AppSettings["user"]);
-            string contraseña = Cifrado.Desencriptar(ConfigurationManager.AppSettings["password"]);
-            bool windowsAuth = bool.TryParse(ConfigurationManager.AppSettings["windowsauth"], out bool isWindowsAuth) && isWindowsAuth;
-
-            string connectionString = windowsAuth
-                ? $"Server={servidor};Database={baseDatos};Integrated Security=SSPI;"
-                : $"Server={servidor};Database={baseDatos};Uid={usuario};Pwd={contraseña};";
+            Database database = new Database();
+            string connectionString = $"Server={Cifrado.Desencriptar(database.Servidor)};Database={Cifrado.Desencriptar(database.BaseDatos)};" + (database.WindowsAuth
+                ? "Integrated Security=SSPI;"
+                : $"Uid={Cifrado.Desencriptar(database.Usuario)};Pwd={Cifrado.Desencriptar(database.Contraseña)};");
 
             return connectionString;
         }

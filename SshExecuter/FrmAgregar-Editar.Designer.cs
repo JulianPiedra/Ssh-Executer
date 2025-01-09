@@ -49,7 +49,7 @@
             btnAceptar.Name = "btnAceptar";
             btnAceptar.Size = new Size(75, 23);
             btnAceptar.TabIndex = 0;
-            btnAceptar.Text = "Aceptar";
+            btnAceptar.Text = "Accept";
             btnAceptar.UseVisualStyleBackColor = true;
             btnAceptar.Click += btnAceptar_Click;
             // 
@@ -59,7 +59,7 @@
             btnCancelar.Name = "btnCancelar";
             btnCancelar.Size = new Size(75, 23);
             btnCancelar.TabIndex = 1;
-            btnCancelar.Text = "Cancelar";
+            btnCancelar.Text = "Cancel";
             btnCancelar.UseVisualStyleBackColor = true;
             btnCancelar.Click += btnCancelar_Click;
             // 
@@ -70,9 +70,9 @@
             lblComando.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             lblComando.Location = new Point(97, 13);
             lblComando.Name = "lblComando";
-            lblComando.Size = new Size(153, 21);
+            lblComando.Size = new Size(159, 21);
             lblComando.TabIndex = 2;
-            lblComando.Text = "Ingrese su comando:";
+            lblComando.Text = "Enter your command:";
             lblComando.Visible = false;
             // 
             // txtComando
@@ -91,9 +91,9 @@
             lblNomServer.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             lblNomServer.Location = new Point(10, 9);
             lblNomServer.Name = "lblNomServer";
-            lblNomServer.Size = new Size(240, 21);
+            lblNomServer.Size = new Size(176, 21);
             lblNomServer.TabIndex = 4;
-            lblNomServer.Text = "Nombre para identificar servidor:";
+            lblNomServer.Text = "Name to identify server:";
             lblNomServer.Visible = false;
             // 
             // txtNombre
@@ -121,9 +121,9 @@
             lblIP.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             lblIP.Location = new Point(10, 60);
             lblIP.Name = "lblIP";
-            lblIP.Size = new Size(95, 21);
+            lblIP.Size = new Size(84, 21);
             lblIP.TabIndex = 6;
-            lblIP.Text = "Dirección IP:";
+            lblIP.Text = "IP address:";
             lblIP.Visible = false;
             // 
             // txtUsuario
@@ -142,9 +142,9 @@
             lblUsuario.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             lblUsuario.Location = new Point(10, 110);
             lblUsuario.Name = "lblUsuario";
-            lblUsuario.Size = new Size(67, 21);
+            lblUsuario.Size = new Size(45, 21);
             lblUsuario.TabIndex = 8;
-            lblUsuario.Text = "Usuario:";
+            lblUsuario.Text = "User:";
             lblUsuario.Visible = false;
             // 
             // txtContraseña
@@ -164,9 +164,9 @@
             lblContraseña.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             lblContraseña.Location = new Point(10, 160);
             lblContraseña.Name = "lblContraseña";
-            lblContraseña.Size = new Size(179, 21);
+            lblContraseña.Size = new Size(163, 21);
             lblContraseña.TabIndex = 10;
-            lblContraseña.Text = "Contraseña de conexión:";
+            lblContraseña.Text = "Connection password:";
             lblContraseña.Visible = false;
             // 
             // textBox1

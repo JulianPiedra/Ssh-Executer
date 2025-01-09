@@ -15,6 +15,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ClaseDatos\ClaseDatos.csproj" />
+    <ProjectReference Include="..\Models\Models.csproj" />
   </ItemGroup>
 
   <ItemGroup>

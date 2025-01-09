@@ -73,7 +73,7 @@ partial class FrmServidores
         btnAgregar.Name = "btnAgregar";
         btnAgregar.Size = new Size(70, 70);
         btnAgregar.TabIndex = 1;
-        Tooltip.SetToolTip(btnAgregar, "Agregar servidor");
+        Tooltip.SetToolTip(btnAgregar, "Add Server");
         btnAgregar.UseVisualStyleBackColor = false;
         btnAgregar.Click += btnAgregar_Click;
         // 
@@ -89,7 +89,7 @@ partial class FrmServidores
         btnEditar.Name = "btnEditar";
         btnEditar.Size = new Size(70, 70);
         btnEditar.TabIndex = 2;
-        Tooltip.SetToolTip(btnEditar, "Editar servidor");
+        Tooltip.SetToolTip(btnEditar, "Edit server");
         btnEditar.UseVisualStyleBackColor = false;
         btnEditar.Click += btnEditar_Click;
         // 
@@ -105,7 +105,7 @@ partial class FrmServidores
         btnEliminar.Name = "btnEliminar";
         btnEliminar.Size = new Size(70, 70);
         btnEliminar.TabIndex = 3;
-        Tooltip.SetToolTip(btnEliminar, "Eliminar servidor");
+        Tooltip.SetToolTip(btnEliminar, "Delete server");
         btnEliminar.UseVisualStyleBackColor = false;
         btnEliminar.Click += btnEliminar_Click;
         // 
@@ -129,7 +129,7 @@ partial class FrmServidores
         btnAgregarComm.Name = "btnAgregarComm";
         btnAgregarComm.Size = new Size(70, 70);
         btnAgregarComm.TabIndex = 6;
-        Tooltip.SetToolTip(btnAgregarComm, "Agregar comando");
+        Tooltip.SetToolTip(btnAgregarComm, "Add command");
         btnAgregarComm.UseVisualStyleBackColor = false;
         btnAgregarComm.Click += btnAgregarComm_Click;
         // 
@@ -145,7 +145,7 @@ partial class FrmServidores
         btnEliminarComm.Name = "btnEliminarComm";
         btnEliminarComm.Size = new Size(70, 70);
         btnEliminarComm.TabIndex = 7;
-        Tooltip.SetToolTip(btnEliminarComm, "Eliminar comando");
+        Tooltip.SetToolTip(btnEliminarComm, "Delete command");
         btnEliminarComm.UseVisualStyleBackColor = false;
         btnEliminarComm.Click += btnEliminarComm_Click;
         // 
@@ -161,7 +161,7 @@ partial class FrmServidores
         btnEditarComm.Name = "btnEditarComm";
         btnEditarComm.Size = new Size(70, 70);
         btnEditarComm.TabIndex = 8;
-        Tooltip.SetToolTip(btnEditarComm, "Editar comando");
+        Tooltip.SetToolTip(btnEditarComm, "Edit command");
         btnEditarComm.UseVisualStyleBackColor = false;
         btnEditarComm.Click += btnEditarComm_Click;
         // 
@@ -177,7 +177,7 @@ partial class FrmServidores
         btnIniciar.Name = "btnIniciar";
         btnIniciar.Size = new Size(65, 65);
         btnIniciar.TabIndex = 10;
-        Tooltip.SetToolTip(btnIniciar, "Ejecutar comando");
+        Tooltip.SetToolTip(btnIniciar, "Execute command");
         btnIniciar.UseVisualStyleBackColor = false;
         btnIniciar.Click += btnIniciar_Click;
         // 
@@ -281,7 +281,7 @@ partial class FrmServidores
         MainMenuStrip = menuStrip1;
         Name = "FrmServidores";
         StartPosition = FormStartPosition.CenterScreen;
-        Text = "Servidores";
+        Text = "Servers";
         Shown += FrmServidores_Load;
         contextMenuStrip1.ResumeLayout(false);
         menuStrip1.ResumeLayout(false);

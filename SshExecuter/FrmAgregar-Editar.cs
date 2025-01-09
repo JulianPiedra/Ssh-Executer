@@ -1,4 +1,5 @@
 ﻿using ClaseDatos;
+using Models;
 using System.Data;
 
 namespace SshExecuter
@@ -21,7 +22,7 @@ namespace SshExecuter
 
         private void FrmAgregar_Editar_Shown(object sender, EventArgs e)
         {
-            if (this.Text == "Manejo Servidor")
+            if (this.Text == "Server Management")
             {
                 this.Size = new Size(311, 333);
                 lblNomServer.Visible = true;
@@ -42,9 +43,8 @@ namespace SshExecuter
                 txtContraseña.Enabled = true;
                 btnAceptar.Location = new Point(12, 257);
                 btnCancelar.Location = new Point(205, 257);
-
             }
-            else if (this.Text == "Manejo Comandos")
+            else if (this.Text == "Command Management")
             {
                 this.Size = new Size(350, 166);
                 lblComando.Visible = true;
@@ -55,39 +55,63 @@ namespace SshExecuter
                 btnCancelar.Location = new Point(247, 88);
             }
         }
+        private Server EncapsularServer() {
+            var server = new Server(
+            NomOriginal,
+                txtNombre.Text,
+                txtIP.Text, 
+                txtUsuario.Text, 
+                txtContraseña.Text
+                );
+            server.Validate();
+            return server;
 
+        }
+        public Command EncapsularCommand() {
+            var command = new Command(
+                NomOriginal,
+                txtNombre.Text,
+                txtComando.Text
+                );
+            command.Validate();
+            return command;
+        }
         private void btnAceptar_Click(object sender, EventArgs e)
         {
             try
             {
                 ManejoArchivos archivos = new ManejoArchivos();
                 FrmServidores servidores = Application.OpenForms.OfType<FrmServidores>().FirstOrDefault();
-
+                
                 if (Editar)
                 {
-                    if (this.Text == "Manejo Servidor")
+                    if (this.Text == "Server Management")
                     {
-                        archivos.ModificarServidor(NomOriginal, txtNombre.Text, txtIP.Text, txtUsuario.Text, txtContraseña.Text);
-                        servidores.lblResultados.Text = ("Se ha modificado la información del servidor");
+                        var server = EncapsularServer();
+                        archivos.ModificarServidor(server);
+                        servidores.lblResultados.Text = "Server information has been modified.";
                     }
-                    else if (this.Text == "Manejo Comandos")
+                    else if (this.Text == "Command Management")
                     {
-                        archivos.ModificarComando(NomOriginal, txtComando.Text);
-                        servidores.lblResultados.Text = ("Se ha modificado la información del comando");
+                        var commando=EncapsularCommand();
+                        archivos.ModificarComando(commando);
+                        servidores.lblResultados.Text = "Command information has been modified.";
                     }
                     Editar = false;
                 }
                 else
                 {
-                    if (this.Text == "Manejo Servidor")
+                    if (this.Text == "Server Management")
                     {
-                        archivos.CrearServidor(txtNombre.Text, txtIP.Text, txtUsuario.Text, txtContraseña.Text);
-                        servidores.lblResultados.Text = ("Se ha agregado un nuevo servidor");
+                        var server = EncapsularServer();
+                        archivos.CrearServidor(server);
+                        servidores.lblResultados.Text = "A new server has been added.";
                     }
-                    else if (this.Text == "Manejo Comandos")
+                    else if (this.Text == "Command Management")
                     {
-                        archivos.CrearComando(txtComando.Text, txtNombre.Text);
-                        servidores.lblResultados.Text = ("Se ha agregado un nuevo comando");
+                        var commando = EncapsularCommand();
+                        archivos.CrearComando(commando);
+                        servidores.lblResultados.Text = "A new command has been added.";
                     }
                 }
 
@@ -96,36 +120,34 @@ namespace SshExecuter
             }
             catch (Exception ex)
             {
-                if (this.Text == "Manejo Servidor")
+                if (this.Text == "Server Management")
                 {
-                    MessageBox.Show($"Ha ocurrido un error {(Editar ? "modificando" : "agregando")} el servidor \n{ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show($"An error occurred while {(Editar ? "modifying" : "adding")} the server. \n{ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
-                else if (this.Text == "Manejo Comandos")
+                else if (this.Text == "Command Management")
                 {
-                    MessageBox.Show($"Ha ocurrido un error {(Editar ? "modificando" : "agregando")} el comando \n{ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show($"An error occurred while {(Editar ? "modifying" : "adding")} the command. \n{ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }
 
-        public void PrecargarDatos(string? Nom_Comm, string? IP, string? User, string? Pass)
+        public void PrecargarDatos(Server? server, Command? comando)
         {
-            if (this.Text == "Manejo Servidor")
+            if (this.Text == "Server Management")
             {
-                NomOriginal = Nom_Comm;
-                txtNombre.Text = Nom_Comm;
-                txtIP.Text = IP;
-                txtUsuario.Text = User;
-                txtContraseña.Text = Pass;
+                NomOriginal = server.NomServer;
+                txtNombre.Text = server.NomServer;
+                txtIP.Text = server.IP;
+                txtUsuario.Text = server.Usuario;
+                txtContraseña.Text = server.Contraseña;
             }
-            else if (this.Text == "Manejo Comandos")
+            else if (this.Text == "Command Management")
             {
-                NomOriginal = Nom_Comm;
-                txtComando.Text = Nom_Comm;
+                NomOriginal = comando.NomOriginal;
+                txtNombre.Text = comando.Server;
+                txtComando.Text = comando.Comando;
             }
             Editar = true;
         }
-
-
-
     }
 }

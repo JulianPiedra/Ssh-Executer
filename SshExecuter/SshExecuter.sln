@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SshExecuter", "SshExecuter.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClaseDatos", "..\ClaseDatos\ClaseDatos.csproj", "{080E6B0D-9DD7-4F7D-A03F-A1ED04C9C721}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Models", "..\Models\Models.csproj", "{D04289A2-10F4-44AB-9DCC-CFFDC88A4EA4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{080E6B0D-9DD7-4F7D-A03F-A1ED04C9C721}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{080E6B0D-9DD7-4F7D-A03F-A1ED04C9C721}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{080E6B0D-9DD7-4F7D-A03F-A1ED04C9C721}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D04289A2-10F4-44AB-9DCC-CFFDC88A4EA4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D04289A2-10F4-44AB-9DCC-CFFDC88A4EA4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D04289A2-10F4-44AB-9DCC-CFFDC88A4EA4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D04289A2-10F4-44AB-9DCC-CFFDC88A4EA4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
